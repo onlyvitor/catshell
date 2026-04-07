@@ -1,4 +1,4 @@
-<img src= "hhttps://media1.tenor.com/m/Va_MYd9zdeUAAAAd/gato-mouse.gif" width="300">
+<img src="https://media1.tenor.com/m/Va_MYd9zdeUAAAAd/gato-mouse.gif" width="300">
 
 # A shell for cat lovers
 
