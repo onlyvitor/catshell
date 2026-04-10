@@ -7,7 +7,7 @@ BUILD_DIR := build
 BIN_DIR := $(BUILD_DIR)/bin
 OBJ_DIR := $(BUILD_DIR)/obj
 
-SRCS := catshell.c readline/cat_read_line.c
+SRCS := catshell.c readline/cat_read_line.c commands/utils.c
 TARGET := catshell
 TARGET_BIN := $(BIN_DIR)/$(TARGET)
 

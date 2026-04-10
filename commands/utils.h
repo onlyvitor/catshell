@@ -1,11 +1,10 @@
-#ifndef CAT_READ_LINE_H
-#define CAT_READ_LINE_H
+#ifndef UTILS_H
+#define UTILS_H
 
-#include <readline/readline.h>
 #include <stdio.h>
-#include "../commands/utils.h"
+#include <stdlib.h>
 
-char *cat_read_line(void);
+char *get_current_directory(char *buffer, size_t size);
 
 //ANSI COLLORS
 #define ANSI_COLOR_RED     "\x1b[31m"
