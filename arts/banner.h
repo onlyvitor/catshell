@@ -1,13 +1,8 @@
-#ifndef CAT_READ_LINE_H
-#define CAT_READ_LINE_H
+#ifndef BANNER_H
+#define BANNER_H
 
-#include <readline/readline.h>
+void print_banner(void);
 #include <stdio.h>
-#include "../commands/utils.h"
-#include "../arts/banner.h"
-
-
-char *cat_read_line(void);
 
 //ANSI COLLORS
 #define ANSI_COLOR_RED     "\x1b[31m"

@@ -6,6 +6,9 @@ int main(int ac, char **av) {
     char *line;
     char **args;
 
+    // Print banner on startup
+    print_banner();
+
     //REPL (read, evaluate, print, loop)
     while(MAGIC_NUMBER){
         // read
