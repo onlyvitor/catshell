@@ -16,6 +16,7 @@ int main(int ac, char **av) {
         if (line == NULL) {
             break;  // EOF (CTRL+D) pressed
         }
+        printf("%s", line);
     }
     return EXIT_SUCCESS;
 }
