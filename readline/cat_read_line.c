@@ -21,6 +21,12 @@ char *cat_read_line(void) {
         else{
             printf(ANSI_COLOR_BLUE" a Error ocurred\n"RESET);
         }
+    } else {
+        // Remove trailing newline
+        size_t len = strlen(buf);
+        if (len > 0 && buf[len - 1] == '\n') {
+            buf[len - 1] = '\0';
+        }
     }
     return buf;
 }

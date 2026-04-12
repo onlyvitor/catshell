@@ -3,6 +3,7 @@
 
 #include <readline/readline.h>
 #include <stdio.h>
+#include <string.h>
 #include "../utils/utils.h"
 #include "../utils/arts/banner.h"
 

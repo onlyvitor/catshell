@@ -17,9 +17,10 @@ int main(int ac, char **av) {
 
         // parse
         args = parse_input(line);
-        printf("%s\n", args[0]);
 
-        printf("%s", line);
+        //execute
+        exec_command(args);
+
     }
     return EXIT_SUCCESS;
 }

@@ -9,6 +9,7 @@
 #include "readline/cat_read_line.h"
 #include "utils/utils.h"
 #include "readline/parser.h"
+#include "utils/exec.h"
 
 
 #endif

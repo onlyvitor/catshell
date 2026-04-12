@@ -37,5 +37,6 @@ char** parse_input(char* input) {
 
     }
 
+    tokens[token_position] = NULL;
     return tokens;
 }
