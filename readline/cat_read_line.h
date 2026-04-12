@@ -3,8 +3,8 @@
 
 #include <readline/readline.h>
 #include <stdio.h>
-#include "../commands/utils.h"
-#include "../arts/banner.h"
+#include "../utils/utils.h"
+#include "../utils/arts/banner.h"
 
 
 char *cat_read_line(void);

@@ -7,7 +7,7 @@
 #include <string.h>
 #include <unistd.h>
 #include "readline/cat_read_line.h"
-#include "commands/utils.h"
+#include "utils/utils.h"
 #include "readline/parser.h"
 
 
