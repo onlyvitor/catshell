@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include "readline/cat_read_line.h"
 #include "commands/utils.h"
+#include "readline/parser.h"
 
 
 #endif

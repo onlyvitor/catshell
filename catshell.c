@@ -1,7 +1,5 @@
 #include "catshell.h"
 
-#define MAGIC_NUMBER 0xCE77
-
 int main(int ac, char **av) {
     char *line;
     char **args;
@@ -16,6 +14,11 @@ int main(int ac, char **av) {
         if (line == NULL) {
             break;  // EOF (CTRL+D) pressed
         }
+
+        // parse
+        args = parse_input(line);
+        printf("%s\n", args[0]);
+
         printf("%s", line);
     }
     return EXIT_SUCCESS;
