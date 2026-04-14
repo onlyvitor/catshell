@@ -2,9 +2,9 @@
 
 
 builtin_t g_builtin[] = {
-    {.name="echo", .func=echo_func},
+    {.name="echo", .func=echo_func},//echo
     //{builtin_name="env", func=env_func},
-    {.name="exit", .func= exit_func},
+    {.name="exit", .func= exit_func},//exit
     {.name="", .func= NULL}
 };
 

@@ -1,5 +1,6 @@
 #include "commands.h"
 
+//echo function
 int echo_func(char **args) {
     for (int i = 1; args[i] != NULL; i++) {
         printf("%s ", args[i]);
