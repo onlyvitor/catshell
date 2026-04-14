@@ -1,8 +1,11 @@
 #ifndef CAT_READ_LINE_H
 #define CAT_READ_LINE_H
+#ifndef _POSIX_C_SOURCE
+#define _POSIX_C_SOURCE 200809L
+#endif
 
-#include <readline/readline.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "../utils/utils.h"
 #include "../utils/arts/banner.h"
