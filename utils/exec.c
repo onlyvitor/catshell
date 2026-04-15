@@ -3,9 +3,9 @@
 
 builtin_t g_builtin[] = {
     {.name="echo", .func=echo_func},//echo
-    //{builtin_name="env", func=env_func},
-    {.name="exit", .func= exit_func},//exit
-    {.name="", .func= NULL}
+    {.name="env", .func=env_func},//env
+    {.name="exit", .func=exit_func},//exit
+    {.name="", .func=NULL}
 };
 
 void exec_command(char **args) {

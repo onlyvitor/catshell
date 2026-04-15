@@ -8,6 +8,7 @@
 int echo_func(char **);
 //exit
 int exit_func(char **);
-
+//env
+int env_func(char **);
 
 #endif
