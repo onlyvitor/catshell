@@ -15,9 +15,20 @@ void exec_command(char **args) {
         if (strcmp(args[0], curr) == 0) {
             g_builtin[i].func(args);
             return;
+        } else {
+            printf("%s: command not found\n", args[0]);
         }
         i++;
     }
 
-    //catshell_launch(args[0]);
+    cat_launch(args);
+}
+
+void cat_launch(char **args) {
+    if (fork() == cat_child) {
+        execvp(args[0], args);
+        _exit(1);
+    }else{
+        wait(NULL);
+    }
 }
