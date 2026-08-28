@@ -2,11 +2,9 @@
 
 //read function
 char *cat_read_line(void) {
-    char *buf;
-    size_t buf_size;
+    char *buf = NULL;
+    size_t buf_size = 0;
     char cwd[BUFSIZ];
-
-    buf = NULL;
     char *current_dir = get_current_directory(cwd, sizeof(cwd));
 
     printf(ANSI_COLOR_CYAN"[%s]$ "RESET, current_dir);
