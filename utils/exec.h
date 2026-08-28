@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../commands/commands.h"
+#include "utils.h"
 
 typedef struct s_builtin {
     char *name;

@@ -6,6 +6,7 @@
 #include <unistd.h>
 
 char *get_current_directory(char *buffer, size_t size);
+void free_args(char **args);
 
 //ANSI COLLORS
 #define ANSI_COLOR_RED     "\x1b[31m"

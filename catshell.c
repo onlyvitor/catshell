@@ -21,6 +21,9 @@ int main() {
         //execute
         exec_command(args);
 
+        //liberate memory leak
+        free_args(args);
+        free(line);
     }
     return EXIT_SUCCESS;
 }
