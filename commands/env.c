@@ -1,6 +1,7 @@
 #include "commands.h"
 
-int env_func(char **args) {
+int env_func(char **args){
+    (void)args;
     extern char **environ;
     if (environ == NULL) {
         return 1;
