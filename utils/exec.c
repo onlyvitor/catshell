@@ -20,7 +20,6 @@ void exec_command(char **args) {
         }
     }
 
-    printf("%s: command not found\n", args[0]);
     cat_launch(args);
 }
 
