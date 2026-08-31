@@ -10,6 +10,7 @@
 #include <string.h>
 #include "../commands/commands.h"
 #include "utils.h"
+#include "../readline/parser.h"
 
 typedef struct s_builtin {
     char *name;
@@ -18,4 +19,7 @@ typedef struct s_builtin {
 
 void exec_command(char **args);
 void cat_launch(char **args);
+void exec_pipeline(pipeline_t* pipeline);
+int is_builtin(char **args);
+
 #endif

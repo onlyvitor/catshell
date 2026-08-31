@@ -2,10 +2,11 @@
 
 int main() {
     char *line;
-    char **args;
+    pipeline_t *pipeline;
 
     // Print banner on startup
     print_banner();
+    fflush(stdout);
 
     //REPL (read, evaluate, print, loop)
     while(MAGIC_NUMBER){
@@ -16,13 +17,13 @@ int main() {
         }
 
         // parse
-        args = parse_input(line);
+        pipeline = parse_input(line);
 
         //execute
-        exec_command(args);
+        exec_pipeline(pipeline);
 
         //liberate memory leak
-        free_args(args);
+        free_pipeline(pipeline);
         free(line);
     }
     return EXIT_SUCCESS;

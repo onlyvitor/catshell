@@ -8,7 +8,7 @@ char *cat_read_line(void) {
     char *current_dir = get_current_directory(cwd, sizeof(cwd));
 
     printf(ANSI_COLOR_CYAN"[%s]$ "RESET, current_dir);
-
+    fflush(stdout);
 
     if (getline(&buf, &buf_size, stdin) == -1) {
         buf = NULL;
