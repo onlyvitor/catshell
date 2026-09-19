@@ -11,7 +11,8 @@
 #include <utility>
 #include <vector>
 
-#include "exec.h"
+#include "readline/parser.hpp"
+#include "utils/exec.hpp"
 #include "commands/commands.hpp"
 
 namespace {
@@ -208,27 +209,15 @@ void run_pipeline(const std::vector<Args> &commands) {
     }
 }
 
-Args to_args(char **tokens) {
-    Args args;
-    for (int j = 0; tokens[j] != nullptr; j++) {
-        args.emplace_back(tokens[j]);
-    }
-    return args;
-}
-
 }  // namespace
 
-extern "C" void exec_pipeline(pipeline_t *pipeline) {
-    if (pipeline == nullptr || pipeline->num_commands == 0) {
-        return;
-    }
+void exec_pipeline(const Pipeline &pipeline) {
     try {
         std::vector<Args> commands;
-        commands.reserve(static_cast<size_t>(pipeline->num_commands));
-        for (int i = 0; i < pipeline->num_commands; i++) {
-            Args args = to_args(pipeline->commands[i]);
-            if (!args.empty()) {
-                commands.push_back(std::move(args));
+        commands.reserve(pipeline.commands.size());
+        for (const Command &command : pipeline.commands) {
+            if (!command.args.empty()) {
+                commands.push_back(command.args);
             }
         }
         if (commands.empty()) {

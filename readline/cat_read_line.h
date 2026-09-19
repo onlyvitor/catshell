@@ -12,7 +12,15 @@
 #include "../utils/arts/banner.h"
 
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 char *cat_read_line(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 //ANSI COLLORS
 #define ANSI_COLOR_RED     "\x1b[31m"
