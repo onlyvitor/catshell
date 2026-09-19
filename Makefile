@@ -9,8 +9,8 @@ BUILD_DIR := build
 BIN_DIR := $(BUILD_DIR)/bin
 OBJ_DIR := $(BUILD_DIR)/obj
 
-C_SRCS := readline/cat_read_line.c
-CXX_SRCS := catshell.cpp readline/parser.cpp utils/arts/banner.cpp utils/utils.cpp utils/exec.cpp commands/echo.cpp commands/exit.cpp commands/env.cpp
+C_SRCS :=
+CXX_SRCS := catshell.cpp readline/reader.cpp readline/parser.cpp utils/arts/banner.cpp utils/utils.cpp utils/exec.cpp commands/echo.cpp commands/exit.cpp commands/env.cpp
 SRCS := $(C_SRCS) $(CXX_SRCS)
 TARGET := catshell
 TARGET_BIN := $(BIN_DIR)/$(TARGET)

@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#include "readline/cat_read_line.h"
+#include "readline/reader.hpp"
 #include "readline/parser.hpp"
 #include "utils/arts/banner.h"
 #include "utils/exec.hpp"
@@ -12,14 +12,12 @@ int main() {
     std::cout.flush();
 
     while (true) {
-        char *line = cat_read_line();
-        if (line == nullptr) {
+        std::optional<std::string> line = catshell::read_line();
+        if (!line) {
             break;
         }
-        std::string input(line);
-        free(line);
 
-        Pipeline pipeline = parse_input(input);
+        Pipeline pipeline = parse_input(*line);
         exec_pipeline(pipeline);
     }
     return EXIT_SUCCESS;
