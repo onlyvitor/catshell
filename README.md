@@ -11,7 +11,7 @@ A simple, educational Unix shell written in C. Inspired by the book *Operating S
 - **External command execution** — Runs any system program via `fork()` + `execvp()`
 - **Colored prompt** — Shows current directory in cyan
 - **ASCII art banner** — Cat-themed welcome screen
-- **Memory safe** — Proper allocation/freeing with `free_args()`
+- **Memory safe** — Proper allocation/freeing with `free_pipeline()`
 - **Clean build system** — Makefile with dependency tracking
 
 ## Quick Start
@@ -78,8 +78,7 @@ catshell/
 │   └── exit.c              # exit builtin
 └── utils/
     ├── exec.c/.h           # command dispatch (builtins + external via fork/execvp)
-    ├── utils.c/.h          # get_current_directory(), free_args(), ANSI colors
-    ├── free_args.c         # frees parsed token array
+    ├── utils.c/.h          # get_current_directory(), ANSI colors
     └── arts/
         └── banner.c/.h     # ASCII art "CATSHELL" banner
 ```
@@ -92,9 +91,9 @@ catshell/
 while (MAGIC_NUMBER) {        // MAGIC_NUMBER = 0xCE77 ("cat" in hex)
     line = cat_read_line();   // 1. READ — shows prompt, reads line
     if (!line) break;         //    EOF (Ctrl+D) → exit loop
-    args = parse_input(line); // 2. EVALUATE — tokenize into words
-    exec_command(args);       // 3. EXECUTE — builtin or external
-    free_args(args);          // 4. CLEANUP — free tokens
+        pipeline = parse_input(line); // 2. EVALUATE — tokenize into commands
+        exec_pipeline(pipeline);      // 3. EXECUTE — builtin or external
+        free_pipeline(pipeline);      // 4. CLEANUP — free tokens
     free(line);
 }
 ```
