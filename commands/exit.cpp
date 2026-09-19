@@ -1,8 +1,8 @@
 #include <cstdlib>
 
-#include "commands/commands.h"
+#include "commands/commands.hpp"
 
-extern "C" int exit_func(char **args) {
+int builtin_exit(const Args &args) {
     (void)args;
     std::exit(0);
 }

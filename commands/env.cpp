@@ -1,10 +1,10 @@
 #include <iostream>
 
-#include "commands/commands.h"
+#include "commands/commands.hpp"
 
 extern char **environ;
 
-extern "C" int env_func(char **args) {
+int builtin_env(const Args &args) {
     (void)args;
     if (environ == nullptr) {
         return 1;

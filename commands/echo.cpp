@@ -1,9 +1,9 @@
 #include <iostream>
 
-#include "commands/commands.h"
+#include "commands/commands.hpp"
 
-extern "C" int echo_func(char **args) {
-    for (int i = 1; args[i] != nullptr; i++) {
+int builtin_echo(const Args &args) {
+    for (size_t i = 1; i < args.size(); i++) {
         std::cout << args[i] << ' ';
     }
     std::cout << '\n';

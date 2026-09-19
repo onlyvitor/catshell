@@ -1,25 +1,16 @@
 #ifndef EXEC_H
 #define EXEC_H
 
-#define cat_child 0
-
-#include <sys/wait.h>
-#include <unistd.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "../commands/commands.h"
-#include "utils.h"
 #include "../readline/parser.h"
 
-typedef struct s_builtin {
-    char *name;
-    int (*func)(char **args);
-} builtin_t;
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-void exec_command(char **args);
-void cat_launch(char **args);
-void exec_pipeline(pipeline_t* pipeline);
-int is_builtin(char **args);
+void exec_pipeline(pipeline_t *pipeline);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
