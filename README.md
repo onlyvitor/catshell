@@ -2,16 +2,17 @@
 
 # catshell — A shell for cat lovers
 
-A simple, educational Unix shell written in C. Inspired by the book *Operating Systems: Design and Implementation* (exercise 28) and the tutorial "Write a Shell in C" by Stephen Brennan.
+A simple, educational Unix shell written in modern C++ (C++20). Inspired by the book *Operating Systems: Design and Implementation* (exercise 28) and the tutorial "Write a Shell in C" by Stephen Brennan.
 
 ## Features
 
 - **REPL loop** — Read, Evaluate, Print, Loop cycle
 - **Built-in commands**: `echo`, `env`, `exit`
 - **External command execution** — Runs any system program via `fork()` + `execvp()`
+- **Pipelines** — Chain commands with `|` (e.g. `ls | head -2`)
 - **Colored prompt** — Shows current directory in cyan
 - **ASCII art banner** — Cat-themed welcome screen
-- **Memory safe** — Proper allocation/freeing with `free_pipeline()`
+- **Memory safe** — RAII and `std::vector`/`std::string`; no manual allocation
 - **Clean build system** — Makefile with dependency tracking
 
 ## Quick Start
@@ -55,6 +56,14 @@ Once running, you'll see the cat banner and a colored prompt:
 
 Any other command runs as a child process (e.g., `ls`, `pwd`, `cat`, `grep`, etc.).
 
+### Pipelines
+
+Commands can be chained with `|` (up to `MaxPipes = 10` stages):
+
+```
+[/home/user]$ ls | head -2
+```
+
 ### Exit the shell
 
 - Type `exit`
@@ -64,50 +73,48 @@ Any other command runs as a child process (e.g., `ls`, `pwd`, `cat`, `grep`, etc
 
 ```
 catshell/
-├── catshell.c              # main() and REPL loop
-├── catshell.h              # umbrella header (includes all modules)
-├── Makefile                # build automation with dependency tracking
-├── README.md               # this file
+├── catshell.cpp             # main() and REPL loop
+├── Makefile                 # build automation with dependency tracking
+├── README.md                # this file
 ├── readline/
-│   ├── cat_read_line.c/.h  # reads input, shows colored prompt with CWD
-│   └── parser.c/.h         # splits input line into tokens (MAX_ARGS=100)
+│   ├── reader.cpp/.hpp      # reads input, shows colored prompt with CWD
+│   └── parser.cpp/.hpp      # splits input into Command/Pipeline (MaxPipes=10)
 ├── commands/
-│   ├── commands.h          # builtin function declarations
-│   ├── echo.c              # echo builtin
-│   ├── env.c               # env builtin
-│   └── exit.c              # exit builtin
+│   ├── commands.hpp         # builtin declarations + Args type
+│   ├── echo.cpp             # echo builtin
+│   ├── env.cpp              # env builtin
+│   └── exit.cpp             # exit builtin
 └── utils/
-    ├── exec.c/.h           # command dispatch (builtins + external via fork/execvp)
-    ├── utils.c/.h          # get_current_directory(), ANSI colors
+    ├── exec.cpp/.hpp        # command dispatch + RAII Pipe/Child process classes
+    ├── utils.cpp/.hpp       # current_directory() via std::filesystem
+    ├── colors.hpp           # ANSI colors (single source of truth)
     └── arts/
-        └── banner.c/.h     # ASCII art "CATSHELL" banner
+        └── banner.cpp/.hpp  # ASCII art "CATSHELL" banner
 ```
 
 ## Architecture Overview
 
-### The REPL Cycle (in `catshell.c`)
+### The REPL Cycle (in `catshell.cpp`)
 
-```c
-while (MAGIC_NUMBER) {        // MAGIC_NUMBER = 0xCE77 ("cat" in hex)
-    line = cat_read_line();   // 1. READ — shows prompt, reads line
-    if (!line) break;         //    EOF (Ctrl+D) → exit loop
-        pipeline = parse_input(line); // 2. EVALUATE — tokenize into commands
-        exec_pipeline(pipeline);      // 3. EXECUTE — builtin or external
-        free_pipeline(pipeline);      // 4. CLEANUP — free tokens
-    free(line);
-}
+```cpp
+while (true) {
+    auto line = catshell::read_line();   // 1. READ — prompt + std::getline
+    if (!line) break;                    //    EOF (Ctrl+D) → exit loop
+    Pipeline pipeline = parse_input(*line); // 2. EVALUATE — tokenize into commands
+    exec_pipeline(pipeline);             // 3. EXECUTE — builtin or external
+}                                        // 4. CLEANUP — RAII, nothing to free
 ```
 
-### Command Execution (`utils/exec.c`)
+### Command Execution (`utils/exec.cpp`)
 
-1. **Check for builtins** — Iterates `g_builtin[]` table (`echo`, `env`, `exit`)
-2. **If not found** — Prints "command not found", then tries external execution
-3. **External execution** — `fork()` → child runs `execvp()`, parent `wait()`s
+1. **Builtin registry** — A table of `{name, function}` pairs (`echo`, `env`, `exit`)
+2. **If not found** — External execution in a child process
+3. **RAII primitives** — `Pipe` owns a pipe fd pair, `Child` owns a forked pid and reaps it on destruction
+4. **Pipelines** — One `Child` per command, daisy-chained through `Pipe` objects; fds close automatically
 
 ### Key Constants
 
-- `MAGIC_NUMBER` = `0xCE77` — keeps the REPL loop running (spells "cat" in leet)
-- `MAX_ARGS` = 100 — maximum tokens per command line
+- `MaxPipes` = 10 — maximum commands per pipeline
 
 ## Key Concepts
 
@@ -119,11 +126,11 @@ while (MAGIC_NUMBER) {        // MAGIC_NUMBER = 0xCE77 ("cat" in hex)
 | **External command** | System program executed in a child process |
 | **fork()** | Creates a child process (copy of parent) |
 | **execvp()** | Replaces child process image with new program |
-| **wait()** | Parent pauses until child terminates |
-| **getcwd()** | Retrieves current working directory |
-| **environ** | Global array of environment variables |
-| **Token** | Individual word/argument from parsed input |
-| **EOF (Ctrl+D)** | End-of-file signal to exit the shell |
+| **waitpid()** | Parent pauses until child terminates |
+| **RAII** | Resource Acquisition Is Initialization — fds/pids freed by destructors |
+| **std::optional** | `read_line()` returns `nullopt` on EOF instead of a sentinel |
+| **std::filesystem** | Portable current working directory retrieval |
+| **std::istringstream** | Whitespace tokenization and `|` segment splitting |
 
 ## Sources & References
 
