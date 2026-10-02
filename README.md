@@ -14,6 +14,7 @@ A simple, educational Unix shell written in modern C++ (C++20). Inspired by the 
 - **ASCII art banner** — Cat-themed welcome screen
 - **Memory safe** — RAII and `std::vector`/`std::string`; no manual allocation
 - **Clean build system** — Makefile with dependency tracking
+- idk
 
 ## Quick Start
 
